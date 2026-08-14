@@ -6,6 +6,15 @@ A modern, interactive Regular Expression Engine developed for **CSE314 — Compi
 
 ---
 
+## 🚀 Live Demo
+
+Experience RegexForge live in your browser:
+👉 **[https://regexforge.onrender.com](https://regexforge.onrender.com)**
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-regexforge.onrender.com-6366f1?style=for-the-badge&logo=render&logoColor=white)](https://regexforge.onrender.com)
+
+---
+
 ## 📌 Project Information
 
 - **Course:** CSE314 — Compiler Design Lab
