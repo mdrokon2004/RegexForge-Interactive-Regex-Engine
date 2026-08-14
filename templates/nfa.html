@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}NFA — RegexForge{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-panel-gap">
+  <!-- Page Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
+    <div>
+      <h1 class="font-display-lg text-display-lg text-gradient font-bold">Thompson's NFA Visualizer</h1>
+      <p class="font-body-md text-body-md text-on-surface-variant text-base mt-1">
+        Interactive visualization of the Non-Deterministic Finite Automaton constructed using Thompson's algorithm with ε-transitions.
+      </p>
+    </div>
+    <span class="badge badge-info text-sm py-1.5 px-4 font-mono" id="nfa-regex-badge">Expression: (a|b)*abb</span>
+  </div>
+
+  <!-- NFA Graph Viewport -->
+  <section class="glass-panel p-6 flex flex-col gap-4">
+    <header class="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/10 flex-wrap gap-3">
+      <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">hub</span>
+        Automata State Graph
+      </h2>
+      <div class="flex gap-2 flex-wrap items-center">
+        <button id="btn-play-nfa" class="btn-primary btn-sm flex items-center gap-1 font-bold">
+          <span class="material-symbols-outlined text-[16px]">play_arrow</span> ▶ Visualize Thompson Construction
+        </button>
+        <button id="btn-prev-nfa" class="btn btn-secondary btn-sm flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">skip_previous</span> ← Prev
+        </button>
+        <button id="btn-step-nfa" class="btn btn-secondary btn-sm flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">skip_next</span> Step ➔
+        </button>
+        <button id="btn-reset-nfa" class="btn btn-secondary btn-sm flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">restart_alt</span> Reset ↺
+        </button>
+      </div>
+    </header>
+
+    <div class="flex justify-between items-center gap-2 flex-wrap">
+      <div class="flex gap-2 flex-wrap" id="nfa-header-badges">
+        <span class="badge badge-info" id="nfa-start-badge">Start State: q0</span>
+        <span class="badge badge-success" id="nfa-accept-badge">Accepting: -</span>
+      </div>
+    </div>
+
+    <div class="graph-viewport h-[450px]" id="nfa-cy-container">
+      <div class="graph-toolbar">
+        <button class="btn btn-secondary btn-sm" onclick="if(window.nfaVis) window.nfaVis.zoomIn()" title="Zoom In">🔍 +</button>
+        <button class="btn btn-secondary btn-sm" onclick="if(window.nfaVis) window.nfaVis.zoomOut()" title="Zoom Out">🔍 -</button>
+        <button class="btn btn-secondary btn-sm" onclick="if(window.nfaVis) window.nfaVis.fitGraph()" title="Fit View">🎯 Fit</button>
+        <button class="btn btn-secondary btn-sm" onclick="if(window.nfaVis) window.nfaVis.resetLayout()" title="Reset Layout">🔄 Reset</button>
+      </div>
+      <div class="flex h-full items-center justify-center text-on-surface-variant">
+        <span>[ Loading Thompson NFA Graph... ]</span>
+      </div>
+    </div>
+
+    <!-- Academic Explanation Callout -->
+    <div id="nfa-status-bar" class="academic-explain-box flex items-start gap-3 mt-2">
+      <span class="material-symbols-outlined text-primary text-[22px] mt-0.5">info</span>
+      <div class="flex flex-col gap-0.5">
+        <span class="font-bold text-xs uppercase tracking-wider text-primary">Thompson's Construction Theory</span>
+        <span id="nfa-explain-text" class="text-sm">Click "▶ Visualize Thompson Construction" to step through the inductive composition of literal fragment NFAs, union (|), Kleene star (*), and concatenation.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NFA Transition Matrix Table -->
+  <section class="glass-panel p-6 flex flex-col gap-4">
+    <header class="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/10">
+      <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">table_chart</span>
+        NFA Transition Table
+      </h2>
+      <span class="badge badge-info" id="nfa-count-badge">0 Transitions</span>
+    </header>
+
+    <div class="data-table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>From State</th>
+            <th>Transition Symbol</th>
+            <th>To State</th>
+            <th>Transition Type</th>
+          </tr>
+        </thead>
+        <tbody id="nfa-table-body">
+          <tr>
+            <td colspan="4" class="text-center text-on-surface-variant py-4">
+              [ Loading NFA Transitions... ]
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Page Navigation Footer Link -->
+  <div class="flex justify-between items-center pt-6 border-t border-black/5 dark:border-white/10 mt-4">
+    <a href="/analyzer" class="glass-panel px-5 py-2.5 rounded-xl font-headline-md font-semibold text-sm text-on-surface hover:text-primary flex items-center gap-2 transition-all">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      ← Lexical &amp; AST Analyzer
+    </a>
+    <a href="/dfa" class="btn-primary px-6 py-2.5 rounded-xl font-headline-md font-bold text-sm flex items-center gap-2 shadow-lg hover:shadow-primary/20 transition-all">
+      Subset DFA →
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

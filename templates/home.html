@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}RegexForge — Interactive Regular Expression Compiler{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-12 max-w-6xl mx-auto py-4">
+
+  <!-- Hero Section -->
+  <section class="flex flex-col lg:flex-row items-center justify-between gap-8 pt-4 pb-8">
+    <div class="flex flex-col gap-6 lg:w-3/5 text-left">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono w-fit">
+        <span class="material-symbols-outlined text-[16px]">verified</span>
+        Interactive Compiler Architecture
+      </div>
+
+      <h1 class="font-display-lg text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-on-surface leading-[1.15]">
+        Interactive Regular Expression <span class="text-gradient">Compiler</span>
+      </h1>
+
+      <p class="font-body-md text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+        Transform regular expressions into tokens, Abstract Syntax Trees, Thompson NFAs, Subset DFAs, and executable string-matching traces in real-time.
+      </p>
+
+      <div class="flex flex-wrap gap-4 pt-2">
+        <a href="/workspace" id="hero-btn-workspace" class="btn-primary px-7 py-3.5 rounded-xl font-headline-md font-bold text-sm uppercase tracking-wider flex items-center gap-2 shadow-lg hover:shadow-primary/25 transition-all">
+          <span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+          Launch Workspace →
+        </a>
+        <a href="/how-it-works" class="glass-panel px-6 py-3.5 rounded-xl font-headline-md font-semibold text-sm text-on-surface hover:text-primary flex items-center gap-2 transition-all">
+          <span class="material-symbols-outlined text-[20px]">menu_book</span>
+          Explore How It Works
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Compiler Code Graphic -->
+    <div class="lg:w-2/5 w-full">
+      <div class="glass-panel p-6 flex flex-col gap-4 shadow-2xl relative overflow-hidden border border-black/5 dark:border-white/10">
+        <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+          </div>
+          <span class="text-xs font-mono text-on-surface-variant">regex_compiler.py</span>
+        </div>
+
+        <div class="font-mono text-xs flex flex-col gap-2.5 bg-background p-4 rounded-lg border border-black/5 dark:border-white/5">
+          <div class="text-on-surface-variant"><span class="text-primary font-bold">in:</span> /<span class="text-amber-600 dark:text-amber-300 font-bold">(a|b)*abb</span>/</div>
+          <div class="text-emerald-600 dark:text-emerald-400">✓ Lexer: 11 tokens generated</div>
+          <div class="text-indigo-600 dark:text-indigo-400">✓ AST: 9 nodes constructed</div>
+          <div class="text-cyan-600 dark:text-cyan-400">✓ NFA: 11 states &amp; 14 transitions</div>
+          <div class="text-purple-600 dark:text-purple-400">✓ DFA: 4 subset states built</div>
+          <div class="text-emerald-500 font-bold mt-1">✓ Matcher: String "aaabb" ➔ MATCH</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="flex flex-col gap-6">
+    <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+      <h2 class="font-headline-md text-2xl sm:text-3xl font-bold text-on-surface">Compiler Pipeline Features</h2>
+      <p class="text-sm text-on-surface-variant">Complete end-to-end transparency into regular expression tokenization, parsing, graph conversion, and state transitions.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-panel-gap">
+      <!-- Feature 1: Lexical Analysis -->
+      <a href="/analyzer" class="glass-card p-6 flex flex-col gap-3 group hover:scale-[1.02] transition-all">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-[26px]">data_array</span>
+        </div>
+        <h3 class="font-headline-md font-bold text-lg text-on-surface group-hover:text-primary transition-colors">1. Lexical Analysis</h3>
+        <p class="text-xs text-on-surface-variant leading-relaxed">Visualize the token stream generated from your regular expression.</p>
+      </a>
+
+      <!-- Feature 2: Thompson NFA -->
+      <a href="/nfa" class="glass-card p-6 flex flex-col gap-3 group hover:scale-[1.02] transition-all">
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-[26px]">hub</span>
+        </div>
+        <h3 class="font-headline-md font-bold text-lg text-on-surface group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">2. Thompson NFA</h3>
+        <p class="text-xs text-on-surface-variant leading-relaxed">Explore the non-deterministic finite automaton with epsilon transitions.</p>
+      </a>
+
+      <!-- Feature 3: Subset DFA -->
+      <a href="/dfa" class="glass-card p-6 flex flex-col gap-3 group hover:scale-[1.02] transition-all">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-[26px]">schema</span>
+        </div>
+        <h3 class="font-headline-md font-bold text-lg text-on-surface group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">3. Subset DFA</h3>
+        <p class="text-xs text-on-surface-variant leading-relaxed">See how the NFA is converted into a deterministic finite automaton.</p>
+      </a>
+
+      <!-- Feature 4: String Matching -->
+      <a href="/testing" class="glass-card p-6 flex flex-col gap-3 group hover:scale-[1.02] transition-all">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-[26px]">science</span>
+        </div>
+        <h3 class="font-headline-md font-bold text-lg text-on-surface group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">4. String Matching</h3>
+        <p class="text-xs text-on-surface-variant leading-relaxed">Execute test strings and inspect character-by-character transition traces.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Pipeline Section -->
+  <section class="glass-panel p-8 flex flex-col gap-6">
+    <div class="flex flex-col gap-1 text-center md:text-left">
+      <h2 class="font-headline-md text-xl font-bold text-on-surface flex items-center justify-center md:justify-start gap-2">
+        <span class="material-symbols-outlined text-primary">alt_route</span>
+        Architectural Pipeline Flow
+      </h2>
+      <p class="text-xs text-on-surface-variant">Complete compilation stages from string input to executed automata matcher.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 pt-2" id="pipeline-stages-container">
+      <!-- Stage 1 -->
+      <div class="glass-panel pipeline-stage-card p-3.5 flex flex-col items-center text-center gap-1 border-primary/30">
+        <span class="font-mono text-[10px] text-primary font-bold">STAGE 1</span>
+        <span class="font-bold text-xs text-on-surface">Regular Expression</span>
+      </div>
+      <!-- Stage 2 -->
+      <div class="glass-panel pipeline-stage-card p-3.5 flex flex-col items-center text-center gap-1">
+        <span class="font-mono text-[10px] text-on-surface-variant font-bold">STAGE 2</span>
+        <span class="font-bold text-xs text-on-surface">Lexer</span>
+      </div>
+      <!-- Stage 3 -->
+      <div class="glass-panel pipeline-stage-card p-3.5 flex flex-col items-center text-center gap-1">
+        <span class="font-mono text-[10px] text-on-surface-variant font-bold">STAGE 3</span>
+        <span class="font-bold text-xs text-on-surface">Parser / AST</span>
+      </div>
+      <!-- Stage 4 -->
+      <div class="glass-panel pipeline-stage-card p-3.5 flex flex-col items-center text-center gap-1">
+        <span class="font-mono text-[10px] text-on-surface-variant font-bold">STAGE 4</span>
+        <span class="font-bold text-xs text-on-surface">Thompson NFA</span>
+      </div>
+      <!-- Stage 5 -->
+      <div class="glass-panel pipeline-stage-card p-3.5 flex flex-col items-center text-center gap-1">
+        <span class="font-mono text-[10px] text-on-surface-variant font-bold">STAGE 5</span>
+        <span class="font-bold text-xs text-on-surface">Subset DFA</span>
+      </div>
+      <!-- Stage 6 -->
+      <div class="glass-panel pipeline-stage-card p-3.5 flex flex-col items-center text-center gap-1 border-emerald-500/30">
+        <span class="font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">STAGE 6</span>
+        <span class="font-bold text-xs text-on-surface">String Matcher</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

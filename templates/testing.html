@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Testing — RegexForge{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-panel-gap">
+  <!-- Page Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
+    <div>
+      <h1 class="font-display-lg text-display-lg text-gradient font-bold">String Matcher &amp; Execution Trace</h1>
+      <p class="font-body-md text-body-md text-on-surface-variant text-base mt-1">
+        Execute batch test strings against the generated DFA and step through character-by-character transition traces.
+      </p>
+    </div>
+    <span class="badge badge-info text-sm py-1.5 px-4 font-mono" id="testing-regex-badge">Regex: (a|b)*abb</span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-panel-gap items-start">
+    <!-- Batch String Testing Panel -->
+    <section class="glass-panel p-6 flex flex-col gap-4">
+      <header class="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/10">
+        <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">science</span>
+          Batch Test Suite
+        </h2>
+        <span class="badge badge-info text-xs">DFA Simulation</span>
+      </header>
+
+      <form id="matcher-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Target Regular Expression</label>
+          <div class="glass-input p-3 flex items-center font-code-sm text-code-sm">
+            <span class="text-primary font-bold mr-2">/</span>
+            <input type="text" id="test-regex-input" class="w-full bg-transparent border-none text-primary outline-none font-mono" value="(a|b)*abb" placeholder="e.g. (a|b)*abb" required>
+            <span class="text-primary font-bold ml-2">/</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Test Strings (One per line)</label>
+          <textarea id="test-strings-input" class="glass-input p-3 font-mono text-sm w-full h-28 outline-none resize-y" placeholder="aaabb&#10;abb&#10;aabb&#10;ababa">aaabb
+abb
+aabb
+ababa</textarea>
+        </div>
+
+        <button type="button" id="btn-run-match" class="btn-primary py-3 px-6 font-label-caps text-label-caps uppercase tracking-wider flex justify-center items-center gap-2 font-bold w-full">
+          <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+          Execute Matches
+        </button>
+      </form>
+
+      <div class="data-table-container mt-2">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Input String</th>
+              <th>Final State</th>
+              <th>Result</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="test-results-body">
+            <tr>
+              <td colspan="4" class="text-center text-on-surface-variant py-4">
+                [ Running Matcher Engine... ]
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Step-by-step Execution Trace Panel -->
+    <section class="glass-panel p-6 flex flex-col gap-4">
+      <header class="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/10 flex-wrap gap-2">
+        <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">timeline</span>
+          Step-by-Step Execution Trace
+        </h2>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="badge badge-info text-xs font-mono" id="trace-string-badge">Select a string</span>
+          <button id="btn-animate-trace" type="button" class="btn-primary btn-sm flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-[16px]">play_circle</span> ▶ Animate Trace
+          </button>
+        </div>
+      </header>
+
+      <!-- Animated Character Tracker Ribbon -->
+      <div id="animated-string-tracker" class="glass-panel p-3 flex flex-col gap-2 bg-background/50 border border-black/5 dark:border-white/5">
+        <div class="flex justify-between items-center text-xs text-on-surface-variant font-mono">
+          <span>CHARACTER TRACKER</span>
+          <span id="trace-status-banner" class="text-primary font-bold">Ready</span>
+        </div>
+        <div id="char-ribbon-container" class="char-track-ribbon min-h-[42px] items-center">
+          <span class="text-xs text-on-surface-variant italic">Select a string to view transition trace</span>
+        </div>
+      </div>
+
+      <div id="trace-steps-container" class="flex flex-col gap-3 min-h-[300px] max-h-[450px] overflow-y-auto pr-1">
+        <div class="text-on-surface-variant text-center py-8">
+          Select a test string from the table to view its step-by-step state transition trace.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Page Navigation Footer Link -->
+  <div class="flex justify-between items-center pt-6 border-t border-black/5 dark:border-white/10 mt-4">
+    <a href="/dfa" class="glass-panel px-5 py-2.5 rounded-xl font-headline-md font-semibold text-sm text-on-surface hover:text-primary flex items-center gap-2 transition-all">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      ← Subset DFA
+    </a>
+    <a href="/how-it-works" class="btn-primary px-6 py-2.5 rounded-xl font-headline-md font-bold text-sm flex items-center gap-2 shadow-lg hover:shadow-primary/20 transition-all">
+      How It Works →
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

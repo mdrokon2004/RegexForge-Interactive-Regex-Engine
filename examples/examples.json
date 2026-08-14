@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Single Symbol",
+    "regex": "a",
+    "description": "Matches exactly the character 'a'",
+    "test_strings": ["a", "b", "aa", ""]
+  },
+  {
+    "id": 2,
+    "name": "Concatenation",
+    "regex": "ab",
+    "description": "Matches 'a' followed immediately by 'b'",
+    "test_strings": ["ab", "a", "b", "aba"]
+  },
+  {
+    "id": 3,
+    "name": "Union / Alternation",
+    "regex": "a|b",
+    "description": "Matches either symbol 'a' or symbol 'b'",
+    "test_strings": ["a", "b", "ab", "c"]
+  },
+  {
+    "id": 4,
+    "name": "Kleene Star",
+    "regex": "a*",
+    "description": "Matches zero or more occurrences of 'a'",
+    "test_strings": ["", "a", "aaaa", "b"]
+  },
+  {
+    "id": 5,
+    "name": "Grouped Alternation",
+    "regex": "(a|b)",
+    "description": "Grouping operator enforcing precedence for union",
+    "test_strings": ["a", "b", "ab"]
+  },
+  {
+    "id": 6,
+    "name": "Classic Pattern",
+    "regex": "(a|b)*abb",
+    "description": "Matches any sequence of 'a's and 'b's ending with 'abb'",
+    "test_strings": ["abb", "aabb", "babb", "ababa", "abbb", "aaabb"]
+  }
+]

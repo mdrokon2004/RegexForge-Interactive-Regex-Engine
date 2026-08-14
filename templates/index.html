@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Workspace — RegexForge{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-panel-gap">
+  <!-- Header Title -->
+  <div class="mb-4">
+    <h1 class="font-display-lg text-display-lg text-gradient font-bold">Regex Engine Workspace</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant text-base mt-2">
+      Enter a regular expression to construct its Abstract Syntax Tree, Thompson NFA, and Subset DFA in real-time.
+    </p>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-panel-gap">
+    <!-- Left Column: Engine Console & Controls -->
+    <div class="flex flex-col gap-panel-gap lg:w-2/3">
+      <!-- Regex Engine Input Panel -->
+      <section class="glass-panel p-6 flex flex-col gap-4">
+        <header class="flex justify-between items-center pb-4 border-b border-black/5 dark:border-white/10">
+          <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">terminal</span>
+            Engine Console
+          </h2>
+          <div class="flex gap-2">
+            <button id="btn-load-examples" type="button" class="btn btn-secondary btn-sm flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">library_books</span> Load Example
+            </button>
+            <button id="btn-clear" type="button" class="btn btn-secondary btn-sm flex items-center gap-1" onclick="document.getElementById('regex-input').value=''">
+              <span class="material-symbols-outlined text-[16px]">delete</span> Clear
+            </button>
+          </div>
+        </header>
+
+        <form id="regex-form" action="/analyzer" method="GET" class="flex flex-col gap-4">
+          <div class="flex flex-col gap-2">
+            <label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Regular Expression</label>
+            <div class="glass-input p-4 min-h-[80px] flex items-center font-code-lg text-code-lg">
+              <span class="text-outline select-none mr-2 font-bold text-primary">/</span>
+              <input type="text" id="regex-input" name="regex" class="regex-input font-code-lg text-primary w-full bg-transparent outline-none" value="(a|b)*abb" placeholder="e.g. (a|b)*abb" autocomplete="off" spellcheck="false" required>
+              <span class="text-outline select-none ml-2 font-bold text-primary">/</span>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center pt-2 flex-wrap gap-4">
+            <div class="flex gap-2 flex-wrap text-xs">
+              <span class="badge badge-info">Literals: a, b, c, 0, 1</span>
+              <span class="badge badge-info">Operators: |, *, +, ?, ()</span>
+              <span class="badge badge-info">Wildcard: .</span>
+            </div>
+            <button type="submit" class="btn-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-wider flex items-center gap-2 font-bold">
+              <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+              Build Automata
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Quick Action Cards -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="/analyzer" class="glass-panel p-4 flex flex-col items-center text-center hover:scale-[1.02] transition-transform">
+          <span class="material-symbols-outlined text-primary text-[32px] mb-2">account_tree</span>
+          <h3 class="font-headline-md text-base text-on-surface font-semibold">1. Lexer & AST</h3>
+          <p class="text-xs text-on-surface-variant mt-1">Inspect tokens and parse tree</p>
+        </a>
+        <a href="/nfa" class="glass-panel p-4 flex flex-col items-center text-center hover:scale-[1.02] transition-transform">
+          <span class="material-symbols-outlined text-primary text-[32px] mb-2">hub</span>
+          <h3 class="font-headline-md text-base text-on-surface font-semibold">2. Thompson NFA</h3>
+          <p class="text-xs text-on-surface-variant mt-1">View non-deterministic graph</p>
+        </a>
+        <a href="/dfa" class="glass-panel p-4 flex flex-col items-center text-center hover:scale-[1.02] transition-transform">
+          <span class="material-symbols-outlined text-primary text-[32px] mb-2">schema</span>
+          <h3 class="font-headline-md text-base text-on-surface font-semibold">3. Subset DFA</h3>
+          <p class="text-xs text-on-surface-variant mt-1">Explore deterministic state sets</p>
+        </a>
+      </section>
+    </div>
+
+    <!-- Right Column: Real-time Pipeline Metrics -->
+    <div class="flex flex-col gap-panel-gap lg:w-1/3">
+      <section class="glass-panel p-6 flex flex-col gap-4 h-full">
+        <header class="pb-4 border-b border-black/5 dark:border-white/10 flex justify-between items-center">
+          <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">analytics</span>
+            Pipeline Metrics
+          </h2>
+          <span class="badge badge-success">✓ REAL DATA</span>
+        </header>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="stat-card">
+            <span class="stat-label">Tokens</span>
+            <span class="stat-value" id="stat-tokens">11</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Parse Nodes</span>
+            <span class="stat-value" id="stat-nodes">7</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">NFA States</span>
+            <span class="stat-value" id="stat-nfa-states">11</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">NFA Transitions</span>
+            <span class="stat-value" id="stat-nfa-trans">14</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">DFA States</span>
+            <span class="stat-value" id="stat-dfa-states">4</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">DFA Transitions</span>
+            <span class="stat-value" id="stat-dfa-trans">8</span>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/10">
+          <a href="/testing" class="btn btn-secondary w-full flex justify-center items-center gap-2">
+            <span class="material-symbols-outlined">science</span>
+            Go to String Matcher & Testing
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Page Navigation Footer Link -->
+  <div class="flex justify-between items-center pt-6 border-t border-black/5 dark:border-white/10 mt-4">
+    <a href="/" class="glass-panel px-5 py-2.5 rounded-xl font-headline-md font-semibold text-sm text-on-surface hover:text-primary flex items-center gap-2 transition-all">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      ← Home
+    </a>
+    <a href="/analyzer" class="btn-primary px-6 py-2.5 rounded-xl font-headline-md font-bold text-sm flex items-center gap-2 shadow-lg hover:shadow-primary/20 transition-all">
+      Lexical &amp; AST Analyzer →
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

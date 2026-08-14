@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works — RegexForge{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-panel-gap">
+  <!-- Page Header -->
+  <div class="mb-2">
+    <h1 class="font-display-lg text-display-lg text-gradient font-bold">Compiler Design Architecture</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant text-base mt-1">
+      A comprehensive walkthrough of the end-to-end regular expression compilation, automata construction, and execution pipeline.
+    </p>
+  </div>
+
+  <!-- Pipeline Overview Diagram -->
+  <section class="glass-panel p-6 flex flex-col gap-4">
+    <header class="pb-4 border-b border-black/5 dark:border-white/10">
+      <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">alt_route</span>
+        Compiler Pipeline Overview
+      </h2>
+    </header>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 py-2 text-center">
+      <div class="stat-card items-center justify-center">
+        <span class="stat-label">Input</span>
+        <span class="font-mono text-primary font-bold text-sm mt-1">Regex String</span>
+      </div>
+      <div class="stat-card items-center justify-center">
+        <span class="stat-label">Phase 1</span>
+        <span class="font-mono text-primary font-bold text-sm mt-1">Lexer</span>
+      </div>
+      <div class="stat-card items-center justify-center">
+        <span class="stat-label">Phase 2</span>
+        <span class="font-mono text-primary font-bold text-sm mt-1">Parser (AST)</span>
+      </div>
+      <div class="stat-card items-center justify-center">
+        <span class="stat-label">Phase 3</span>
+        <span class="font-mono text-primary font-bold text-sm mt-1">Thompson NFA</span>
+      </div>
+      <div class="stat-card items-center justify-center">
+        <span class="stat-label">Phase 4</span>
+        <span class="font-mono text-primary font-bold text-sm mt-1">Subset DFA</span>
+      </div>
+      <div class="stat-card items-center justify-center">
+        <span class="stat-label">Output</span>
+        <span class="font-mono text-emerald-400 font-bold text-sm mt-1">String Matcher</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Pipeline Stage Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-panel-gap">
+
+    <section class="glass-panel p-6 flex flex-col gap-3">
+      <header class="flex justify-between items-center pb-3 border-b border-black/5 dark:border-white/10">
+        <h3 class="font-headline-md text-lg text-on-surface font-bold">1. Lexical Analysis (Lexer)</h3>
+        <span class="badge badge-info font-mono text-xs">lexer.py</span>
+      </header>
+      <p class="text-on-surface-variant text-sm flex-grow">
+        Scans the raw regex string character by character to yield a structured stream of tokens. Crucially inserts explicit <code class="text-primary font-bold">CONCAT</code> tokens between adjacent symbols, closures, and groups.
+      </p>
+      <div class="stat-card mt-2">
+        <span class="stat-label">Implicit Concat Insertion</span>
+        <code class="text-primary text-xs mt-1">"ab" ➔ SYMBOL('a') CONCAT SYMBOL('b')</code>
+      </div>
+    </section>
+
+    <section class="glass-panel p-6 flex flex-col gap-3">
+      <header class="flex justify-between items-center pb-3 border-b border-black/5 dark:border-white/10">
+        <h3 class="font-headline-md text-lg text-on-surface font-bold">2. Syntax Parsing &amp; AST</h3>
+        <span class="badge badge-info font-mono text-xs">parser.py / ast.py</span>
+      </header>
+      <p class="text-on-surface-variant text-sm flex-grow">
+        Uses deterministic recursive descent parsing to construct an Abstract Syntax Tree. Enforces strict operator precedence: Grouping &gt; Repetitions (*, +, ?) &gt; Concatenation &gt; Union (|).
+      </p>
+      <div class="stat-card mt-2">
+        <span class="stat-label">Precedence Rank</span>
+        <code class="text-purple-300 text-xs mt-1">() &gt; *, +, ? &gt; • (Concat) &gt; | (Union)</code>
+      </div>
+    </section>
+
+    <section class="glass-panel p-6 flex flex-col gap-3">
+      <header class="flex justify-between items-center pb-3 border-b border-black/5 dark:border-white/10">
+        <h3 class="font-headline-md text-lg text-on-surface font-bold">3. Thompson NFA Construction</h3>
+        <span class="badge badge-info font-mono text-xs">thompson.py / nfa.py</span>
+      </header>
+      <p class="text-on-surface-variant text-sm flex-grow">
+        Recursively converts AST nodes into NFA sub-graphs with unique state IDs and ε-transitions. Guarantees single start state and single accepting state per construction block.
+      </p>
+      <div class="stat-card mt-2">
+        <span class="stat-label">Supported Operators</span>
+        <code class="text-amber-400 text-xs mt-1">Literal, Concat, Union (|), Kleene Star (*)</code>
+      </div>
+    </section>
+
+    <section class="glass-panel p-6 flex flex-col gap-3">
+      <header class="flex justify-between items-center pb-3 border-b border-black/5 dark:border-white/10">
+        <h3 class="font-headline-md text-lg text-on-surface font-bold">4. Subset Construction (DFA)</h3>
+        <span class="badge badge-info font-mono text-xs">subset.py / dfa.py</span>
+      </header>
+      <p class="text-on-surface-variant text-sm flex-grow">
+        Converts NFA into a Deterministic Finite Automaton by computing ε-closures and move transitions across sets of NFA states. Any set containing an NFA accept state becomes a DFA accept state.
+      </p>
+      <div class="stat-card mt-2">
+        <span class="stat-label">Key Operations</span>
+        <code class="text-primary text-xs mt-1">ε-closure(S), move(S, symbol)</code>
+      </div>
+    </section>
+
+    <section class="glass-panel p-6 flex flex-col gap-3">
+      <header class="flex justify-between items-center pb-3 border-b border-white/10">
+        <h3 class="font-headline-md text-lg text-on-surface font-bold">5. Custom String Matcher</h3>
+        <span class="badge badge-info font-mono text-xs">matcher.py</span>
+      </header>
+      <p class="text-on-surface-variant text-sm flex-grow">
+        Simulates character-by-character transition across DFA states. Does <strong>NOT</strong> rely on standard library regex modules. Emits full step-by-step execution traces for visual debugging.
+      </p>
+      <div class="stat-card mt-2">
+        <span class="stat-label">Result Status</span>
+        <code class="text-emerald-400 text-xs mt-1">✓ MATCH / ✕ NO MATCH + Execution Trace</code>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Page Navigation Footer Link -->
+  <div class="flex justify-between items-center pt-6 border-t border-black/5 dark:border-white/10 mt-4">
+    <a href="/testing" class="glass-panel px-5 py-2.5 rounded-xl font-headline-md font-semibold text-sm text-on-surface hover:text-primary flex items-center gap-2 transition-all">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      ← String Matcher
+    </a>
+    <a href="/about" class="btn-primary px-6 py-2.5 rounded-xl font-headline-md font-bold text-sm flex items-center gap-2 shadow-lg hover:shadow-primary/20 transition-all">
+      About &amp; Team →
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+    </a>
+  </div>
+</div>
+{% endblock %}

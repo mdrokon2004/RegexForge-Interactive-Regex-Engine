@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}About &amp; Team — RegexForge{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-panel-gap max-w-5xl mx-auto">
+  <!-- Hero Section -->
+  <section class="text-center py-6">
+    <h1 class="font-display-lg text-display-lg text-gradient font-bold mb-4">
+      Interactive Regular Expression Engine
+    </h1>
+    <p class="font-body-md text-body-md text-on-surface-variant text-lg max-w-3xl mx-auto">
+      RegexForge is a custom compiler project developed for the CSE314 Compiler Design Lab. It provides end-to-end visibility into regular expression compilation—from tokenization and abstract syntax tree construction to Thompson NFA building, subset DFA conversion, and custom string matching.
+    </p>
+  </section>
+
+  <!-- Academic Metadata Grid -->
+  <section class="glass-panel p-6 flex flex-col gap-4">
+    <header class="pb-4 border-b border-black/5 dark:border-white/10 flex justify-between items-center">
+      <h2 class="font-headline-md text-headline-md text-on-surface font-semibold flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">school</span>
+        Academic Information
+      </h2>
+      <span class="badge badge-info font-mono">Project #24</span>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="stat-card">
+        <span class="stat-label">Course</span>
+        <span class="text-on-surface font-semibold text-sm mt-1">CSE314 — Compiler Design Lab</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Project Topic</span>
+        <span class="text-primary font-semibold text-sm mt-1">Regular Expression Engine</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Group</span>
+        <span class="text-on-surface font-semibold text-sm mt-1">Group 9</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Team Name</span>
+        <span class="text-amber-600 dark:text-amber-400 font-bold text-sm mt-1">Uronto Helicopter</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="flex flex-col gap-6 mt-4">
+    <div class="flex items-center justify-center gap-4">
+      <div class="h-px w-16 bg-gradient-to-r from-transparent to-primary/50"></div>
+      <h2 class="font-headline-md text-headline-md text-primary tracking-wide uppercase font-bold">The Team</h2>
+      <div class="h-px w-16 bg-gradient-to-l from-transparent to-primary/50"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-panel-gap max-w-4xl mx-auto w-full">
+      <!-- Team Member 1: MD Rokonuzzaman (MUST ALWAYS BE FIRST) -->
+      <div class="glass-panel p-8 flex flex-col items-center text-center group hover:scale-[1.02] transition-all duration-300">
+        <div class="relative w-32 h-32 rounded-full overflow-hidden mb-5 p-1 bg-gradient-to-tr from-primary to-cyan-400 shadow-lg">
+          <img src="{{ url_for('static', filename='images/rokon.jpg') }}" alt="MD Rokonuzzaman Portrait" class="w-full h-full rounded-full object-cover bg-surface" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=MD+Rokonuzzaman&background=4f46e5&color=fff';">
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface font-bold mb-1">MD Rokonuzzaman</h3>
+        <div class="font-code-sm text-code-sm text-primary mb-3 bg-primary/10 px-3 py-1 rounded-full border border-primary/20 font-mono">
+          ID: 242-15-550
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant text-sm font-medium">
+          Core Engine &amp; Compiler Pipeline Developer
+        </p>
+      </div>
+
+      <!-- Team Member 2: Abdullah Hell Kafi -->
+      <div class="glass-panel p-8 flex flex-col items-center text-center group hover:scale-[1.02] transition-all duration-300">
+        <div class="relative w-32 h-32 rounded-full overflow-hidden mb-5 p-1 bg-gradient-to-tr from-primary to-indigo-400 shadow-lg">
+          <img src="{{ url_for('static', filename='images/kafi.jpg') }}" alt="Abdullah Hell Kafi Portrait" class="w-full h-full rounded-full object-cover bg-surface" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Abdullah+Hell+Kafi&background=4f46e5&color=fff';">
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface font-bold mb-1">Abdullah Hell Kafi</h3>
+        <div class="font-code-sm text-code-sm text-primary mb-3 bg-primary/10 px-3 py-1 rounded-full border border-primary/20 font-mono">
+          ID: 242-15-387
+        </div>
+        <p class="font-body-md text-body-md text-on-surface-variant text-sm font-medium">
+          UI/UX &amp; Automata Visualization Engineer
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page Navigation Footer Link -->
+  <div class="flex justify-between items-center pt-6 border-t border-black/5 dark:border-white/10 mt-4">
+    <a href="/how-it-works" class="glass-panel px-5 py-2.5 rounded-xl font-headline-md font-semibold text-sm text-on-surface hover:text-primary flex items-center gap-2 transition-all">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      ← How It Works
+    </a>
+    <a href="/workspace" class="btn-primary px-6 py-2.5 rounded-xl font-headline-md font-bold text-sm flex items-center gap-2 shadow-lg hover:shadow-primary/20 transition-all">
+      Launch Workspace →
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+    </a>
+  </div>
+</div>
+{% endblock %}
